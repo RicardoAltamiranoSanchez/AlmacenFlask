@@ -1,0 +1,41 @@
+{% extends 'layout/base.html'%}
+<!-- importamos nuestra plantilla base con extends y el block con el nombre contenido donde pondremos nuestro contenido-->
+{% block contenido%}
+
+
+  <!--hicimo un for de pusimos la key para indicar la llave que vamos iteras y los items() para que nos muesre todo-->
+     {% for producto in productos.items  %}
+  <div>
+  <!--las varibales se pone con doble  y mostramos el producto y el atributo de nombre-->
+  <!--lo redirigimos con url_for el producto es el nombre del blueprint y la funcion de ese bluenprin-->
+  <!--y lo mandmos con el id de la llave que es la key del diccionario-->
+      <a href="{{url_for('producto.Detalle',id=producto['id'])}}">{{producto['nombre']}}</a>
+<!--un for con un if adentro se pude hacer dos condicionales enun mismo bloque ejemplo-->
+    <a href="{{url_for('producto.Actualizar', id=producto['id'])}}">Actualizar</a>
+<!--Eliminamos el producto-->
+    <a href="{{url_for('producto.Eliminar', id=producto['id'])}}">Eliminar</a>
+<!--loop es un metodo de python para itera en un ciclo for tiene varios metodos en este caso solo nos muestra la pocision empezando dedsde el uno-->
+     {{loop.index}}
+      
+  </div>
+
+     {%endfor%}
+<!--codigo para empaginado de la pagina-->
+<div class=pagination>
+{%- for page in productos.iter_pages() %}
+{% if page !=productos.page %}
+<a href ="{{ url_for('producto.Inicio', page=page)}}">{{pagina}}</a>
+{% else %}
+<strong>{{page}}</strong>
+
+
+{%endif%}
+{%- endfor %}
+
+
+
+</div>
+
+
+
+{%endblock%}
